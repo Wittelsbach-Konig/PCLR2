@@ -31,8 +31,8 @@ gcc -O3 -Wall -Werror lab2.c -o lab2-framewave -lfwBase -lfwSignal -LFramewave/l
 - Before running the application, make sure the Framewave library is in the environment's shared library (LD_LIBRARY_PATH) search path.
 ```
 export LD_LIBRARY_PATH=ExampleDir/Framewave/lib:$LD_LIBRARY_PATH
-```
+
          (example)
-```
+
 export LD_LIBRARY_PATH=Framewave/lib:$LD_LIBRARY_PATH
 ```
