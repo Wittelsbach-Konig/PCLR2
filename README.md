@@ -5,11 +5,11 @@ For 64 bit installation
 ```
 cd ExampleDir/Framewave/lib
 ```
--For 32 bit installation
+For 32 bit installation
 ```
 cd ExampleDir/Framewave/lib
 ```
--Then create the following soft links using the following commands. 
+Then create the following soft links using the following commands. 
 ```
 ln -sf ./libfwBase.so.1.3.1 libfwBase.so.1
 ln -sf ./libfwImage.so.1.3.1 libfwImage.so.1
@@ -32,7 +32,7 @@ gcc -O3 -Wall -Werror lab2.c -o lab2-framewave -lfwBase -lfwSignal -LFramewave/l
 ```
 export LD_LIBRARY_PATH=ExampleDir/Framewave/lib:$LD_LIBRARY_PATH
 ```
--(example)
+(example)
 ```
 export LD_LIBRARY_PATH=Framewave/lib:$LD_LIBRARY_PATH
 ```
