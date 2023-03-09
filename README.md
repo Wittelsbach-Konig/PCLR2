@@ -1,7 +1,7 @@
 # Parallel computing task #2
 ### Installation of AMD Framewave library
 - To use the shared libraries, create the following symbolic links.
-- For 64 bit installation
+For 64 bit installation
 ```
 cd ExampleDir/Framewave/lib
 ```
