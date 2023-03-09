@@ -11,8 +11,8 @@ int main(int argc, char* argv[]) {
     struct timeval T1, T2;
     long delta_ms;
     N = atoi(argv[1]); /* N равен первому параметру командной строки */
-    //unsigned int Threads_Number = atoi(argv[2]);
-    //fwSetNumThreads(/*Threads_Number*/1);
+    unsigned int Threads_Number = atoi(argv[2]);
+    fwSetNumThreads(Threads_Number);
     gettimeofday(&T1, NULL); /* запомнить текущее время T1 */
     int N2 = N/2; /* N2 равен N/2*/
     Fw64f* restrict M1 = (Fw64f*) fwMalloc(N * sizeof(Fw64f)); 
@@ -25,8 +25,8 @@ int main(int argc, char* argv[]) {
     unsigned int seed;
     unsigned int* restrict seedp = &seed;
     unsigned int* restrict seedp1 = &seed;
-    int len1 = 1;
-    int len2 = 1;
+    int len1 = N;
+    int len2 = N2;
     for (i=0; i < 100; ++i) { /* 100 экспериментов */
         /* инициализировать начальное значение ГСЧ */
         seed = i;
@@ -40,30 +40,29 @@ int main(int argc, char* argv[]) {
         }
         
         // MAP
-        for (j = 0; j < N; ++j) {
-            //M1[j] = exp(sqrt(M1[j]));
-            fwsSqrt_64f_I(M1 +j, len1);
-            fwsExp_64f_I(M1 + j, len1);
-        }
-        for (k = 0; k < N2; ++k) {
-            M2_old[k] = M2[k];
-        }
-        for(k = 0; k < N2; ++k){
-            if(k > 0) {
-                //M2[k] = M2[k] + M2_old[k-1];
-                fwsAdd_64f_I(M2_old + k - 1, M2 + k, len2);
-            }
-            else {}
-            //M2[k] = log(fabs(tan(M2[k])));
-            fwsTan_64f_A53(M2 + k, M2 + k, len2);
-            fwsAbs_64f_I(M2 + k, len2);
-            fwsLn_64f_I(M2 + k, len2);
-        }
+//        for (j = 0; j < N; ++j) {
+//            M1[j] = exp(sqrt(M1[j]));
+//        }
+        fwsSqrt_64f_I(M1, len1);
+        fwsExp_64f_I(M1, len1);
+//        for (k = 0; k < N2; ++k) {
+//            M2_old[k] = M2[k];
+//        }
+        fwsCopy_64f(M2, M2_old, len2);
+//        M2[0] = log(fabs(tan(M2[0])));
+//        for(k = 1; k < N2; ++k){
+//            M2[k] = M2[k] + M2_old[k-1];
+//            M2[k] = log(fabs(tan(M2[k])));
+//        }
+        fwsAdd_64f_I(M2_old, M2 + 1, len2 - 1);
+        fwsTan_64f_A53(M2, M2, len2);
+        fwsAbs_64f_I(M2, len2);
+        fwsLn_64f_I(M2, len2);
         // MERGE
-        for(k=0; k < N2; ++k) {
-            //M2[k]= M1[k] * M2[k];
-            fwsMul_64f_I(M1 + k, M2 + k, len2);
-        }
+//        for(k=0; k < N2; ++k) {
+//            M2[k]= M1[k] * M2[k]; 
+//        }
+        fwsMul_64f_I(M1, M2, len2);
         // SORT
         for (k = 0; k < (N2-1); ++k) {
             min_s = k;
