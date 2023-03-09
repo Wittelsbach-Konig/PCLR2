@@ -1,11 +1,11 @@
 # Parallel computing task #2
 ### Installation of AMD Framewave library
 - To use the shared libraries, create the following symbolic links.
-        For 64 bit installation
+For 64 bit installation
 ```
 cd ExampleDir/Framewave/lib
 ```
-        For 32 bit installation
+For 32 bit installation
 ```
 cd ExampleDir/Framewave/lib
 ```
@@ -32,7 +32,7 @@ gcc -O3 -Wall -Werror lab2.c -o lab2-framewave -lfwBase -lfwSignal -LFramewave/l
 ```
 export LD_LIBRARY_PATH=ExampleDir/Framewave/lib:$LD_LIBRARY_PATH
 ```
--         (example)
+(example)
 ```
 export LD_LIBRARY_PATH=Framewave/lib:$LD_LIBRARY_PATH
 ```
